@@ -1,5 +1,6 @@
 package com.rs.locnote
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -22,6 +23,13 @@ class FirstActivity : AppCompatActivity() {
         setContentView(binding.root)
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, data)
         binding.listView.adapter = adapter
+
+        binding.listView.setOnItemClickListener { _, _, pos, _ ->
+            val fruit = data[pos]
+            val intent = Intent(this, SecondActivity::class.java)
+            intent.putExtra("fruit", fruit)
+            startActivity(intent)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

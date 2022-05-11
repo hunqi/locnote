@@ -10,4 +10,10 @@
         android:layout_height="wrap_content"
         android:text="Button 2"/>
 
+    <TextView
+        android:id="@+id/fruitName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Hello fruit"/>
+
 </LinearLayout>
