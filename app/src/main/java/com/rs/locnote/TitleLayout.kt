@@ -2,10 +2,11 @@ package com.rs.locnote
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
-import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import com.rs.locnote.databinding.TitleBinding
 
 class TitleLayout(context: Context, attrs : AttributeSet) : LinearLayout(context, attrs) {
@@ -18,7 +19,8 @@ class TitleLayout(context: Context, attrs : AttributeSet) : LinearLayout(context
             activity.finish()
         }
         binding.titleEdit.setOnClickListener {
-            Toast.makeText(context, "You clicked Edit button", Toast.LENGTH_SHORT).show()
+            val intent = Intent(context, NewNoteActivity::class.java)
+            startActivity(context, intent, null)
         }
     }
 

@@ -11,14 +11,14 @@ import java.lang.StringBuilder
 class SecondActivity : AppCompatActivity() {
 
     private lateinit var binding: SecondLayoutBinding
-    private var title: String? = "data"
+    private var title: String? = "title"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = SecondLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
         super.onCreate(savedInstanceState)
 
-        title = intent.getStringExtra("fruit")
+        title = intent.getStringExtra("title")
         binding.title.text = title;
 
         val content = load(title)

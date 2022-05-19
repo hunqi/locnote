@@ -4,7 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Ray/AndroidStudioProjects/locnote/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/Users/Ray/AndroidStudioProjects/locnote/app/src/main/res/layout/activity_new_note.xml" value="0.2" />
         <entry key="..\:/Users/Ray/AndroidStudioProjects/locnote/app/src/main/res/layout/first_layout.xml" value="0.18" />
+        <entry key="..\:/Users/Ray/AndroidStudioProjects/locnote/app/src/main/res/layout/news_title_frag.xml" value="0.17864583333333334" />
+        <entry key="..\:/Users/Ray/AndroidStudioProjects/locnote/app/src/main/res/layout/second_layout.xml" value="0.2" />
+        <entry key="..\:/Users/Ray/AndroidStudioProjects/locnote/app/src/main/res/layout/title.xml" value="0.25" />
       </map>
     </option>
   </component>

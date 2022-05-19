@@ -10,12 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Locnote">
         <activity
+            android:name=".NewNoteActivity"
+            android:exported="false" />
+        <activity
             android:name=".SecondActivity"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.example.activitytest.ACTION_START"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="com.example.activitytest.MY_CATEGORY"/>
+                <action android:name="com.example.activitytest.ACTION_START" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="com.example.activitytest.MY_CATEGORY" />
             </intent-filter>
         </activity>
         <activity
