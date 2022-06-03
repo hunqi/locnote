@@ -7,7 +7,9 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.rs.locnote.databinding.FirstLayoutBinding
+import java.text.SimpleDateFormat
 import java.util.*
 import java.util.stream.Stream
 import kotlin.collections.ArrayList
@@ -15,32 +17,28 @@ import kotlin.collections.ArrayList
 class FirstActivity : AppCompatActivity() {
 
     private lateinit var binding: FirstLayoutBinding
-    private lateinit var adapter: ArrayAdapter<String>
+    private val notes = ArrayList<Note>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = FirstLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, fileList())
-        binding.listView.adapter = adapter
 
-        binding.listView.setOnItemClickListener { _, _, pos, _ ->
-            val fruit = fileList()[pos]
-            val intent = Intent(this, SecondActivity::class.java)
-            intent.putExtra("title", fruit)
-            startActivity(intent)
-        }
+        initNotes()
+        val layoutManager = LinearLayoutManager(this)
+        binding.recyclerView.layoutManager = layoutManager
+
+        val adapter = NoteAdapter(notes)
+        binding.recyclerView.adapter = adapter
     }
 
-    override fun onRestart() {
-        super.onRestart()
-        adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, fileList())
-        binding.listView.adapter = adapter
-        binding.listView.setOnItemClickListener { _, _, pos, _ ->
-            val fruit = fileList()[pos]
-            val intent = Intent(this, SecondActivity::class.java)
-            intent.putExtra("title", fruit)
-            startActivity(intent)
-        }
+    private fun initNotes() {
+        // todo need to load data from database
+        val note1 = Note("test1", "first line1", SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Date()))
+        val note2 = Note("test2", "first line2", SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Date()))
+
+        notes.add(note2)
+        notes.add(note1)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
