@@ -55,7 +55,7 @@ class FirstActivity : AppCompatActivity() {
     private fun createNote(cursor: Cursor?): Note? {
         val title = cursor?.getString(cursor.getColumnIndex("title"))
         val firstLine = cursor?.getString(cursor.getColumnIndex("content"))
-        val createTime = cursor?.getString(cursor.getColumnIndex("create_time"))
+        val createTime = cursor?.getString(cursor.getColumnIndex("update_time"))
         return title?.let { Note(it, firstLine, createTime) }
     }
 
