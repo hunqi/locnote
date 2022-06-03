@@ -1,6 +1,8 @@
 package com.rs.locnote
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.database.Cursor
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -8,6 +10,7 @@ import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.rs.locnote.dao.NoteDatabaseHelper
 import com.rs.locnote.databinding.FirstLayoutBinding
 import java.text.SimpleDateFormat
 import java.util.*
@@ -18,11 +21,15 @@ class FirstActivity : AppCompatActivity() {
 
     private lateinit var binding: FirstLayoutBinding
     private val notes = ArrayList<Note>()
+    private lateinit var dbHelper: NoteDatabaseHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = FirstLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        dbHelper = NoteDatabaseHelper(this, "locnote.db", 1)
+        dbHelper.writableDatabase
 
         initNotes()
         val layoutManager = LinearLayoutManager(this)
@@ -33,12 +40,23 @@ class FirstActivity : AppCompatActivity() {
     }
 
     private fun initNotes() {
-        // todo need to load data from database
-        val note1 = Note("test1", "first line1", SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Date()))
-        val note2 = Note("test2", "first line2", SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Date()))
+        val db = dbHelper.writableDatabase
+        val cursor = db.query("Note", null, null, null, null, null, null)
 
-        notes.add(note2)
-        notes.add(note1)
+        if (cursor.moveToFirst()) {
+            do {
+                createNote(cursor)?.let { notes.add(it) }
+            }while (cursor.moveToNext())
+        }
+        cursor.close()
+    }
+
+    @SuppressLint("Range")
+    private fun createNote(cursor: Cursor?): Note? {
+        val title = cursor?.getString(cursor.getColumnIndex("title"))
+        val firstLine = cursor?.getString(cursor.getColumnIndex("content"))
+        val createTime = cursor?.getString(cursor.getColumnIndex("create_time"))
+        return title?.let { Note(it, firstLine, createTime) }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
