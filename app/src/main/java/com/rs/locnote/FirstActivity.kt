@@ -9,6 +9,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rs.locnote.dao.NoteDatabaseHelper
 import com.rs.locnote.databinding.FirstLayoutBinding
@@ -37,6 +38,11 @@ class FirstActivity : AppCompatActivity() {
 
         val adapter = NoteAdapter(notes)
         binding.recyclerView.adapter = adapter
+
+        binding.newNote.setOnClickListener {
+            val intent = Intent(this, NewNoteActivity::class.java)
+            ContextCompat.startActivity(this, intent, null)
+        }
     }
 
     private fun initNotes() {

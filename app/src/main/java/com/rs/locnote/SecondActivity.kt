@@ -32,7 +32,6 @@ class SecondActivity : AppCompatActivity() {
         if (content.isNotEmpty()) {
             binding.content.setText(content)
             binding.content.setSelection(content.length)
-            Toast.makeText(this, "Restoring succeeded", Toast.LENGTH_SHORT).show()
         }
     }
 
