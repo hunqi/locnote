@@ -3,25 +3,19 @@ package com.rs.locnote
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.database.Cursor
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.rs.locnote.dao.NoteDatabaseHelper
 import com.rs.locnote.databinding.FirstLayoutBinding
-import java.text.SimpleDateFormat
-import java.util.*
-import java.util.stream.Stream
-import kotlin.collections.ArrayList
 
 class FirstActivity : BaseActivity() {
 
     private lateinit var binding: FirstLayoutBinding
     private val notes = ArrayList<Note>()
+    private lateinit var adapter: NoteAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +26,8 @@ class FirstActivity : BaseActivity() {
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
 
-        val adapter = NoteAdapter(notes)
+        adapter = NoteAdapter(notes)
+        adapter.notifyDataSetChanged()
         binding.recyclerView.adapter = adapter
 
         binding.newNote.setOnClickListener {
@@ -51,6 +46,13 @@ class FirstActivity : BaseActivity() {
             }while (cursor.moveToNext())
         }
         cursor.close()
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        notes.clear()
+        initNotes()
+        adapter.notifyDataSetChanged()
     }
 
     @SuppressLint("Range")
