@@ -18,19 +18,15 @@ import java.util.*
 import java.util.stream.Stream
 import kotlin.collections.ArrayList
 
-class FirstActivity : AppCompatActivity() {
+class FirstActivity : BaseActivity() {
 
     private lateinit var binding: FirstLayoutBinding
     private val notes = ArrayList<Note>()
-    private lateinit var dbHelper: NoteDatabaseHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = FirstLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        dbHelper = NoteDatabaseHelper(this, "locnote.db", 1)
-        dbHelper.writableDatabase
 
         initNotes()
         val layoutManager = LinearLayoutManager(this)
@@ -46,7 +42,7 @@ class FirstActivity : AppCompatActivity() {
     }
 
     private fun initNotes() {
-        val db = dbHelper.writableDatabase
+        val db = dbHelper.readableDatabase
         val cursor = db.query("Note", null, null, null, null, null, null)
 
         if (cursor.moveToFirst()) {

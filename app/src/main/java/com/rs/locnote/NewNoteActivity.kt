@@ -2,9 +2,7 @@ package com.rs.locnote
 
 import android.content.ContentValues
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.rs.locnote.dao.NoteDatabaseHelper
 import com.rs.locnote.databinding.ActivityNewNoteBinding
 import java.io.BufferedWriter
 import java.io.IOException
@@ -12,15 +10,13 @@ import java.io.OutputStreamWriter
 import java.text.SimpleDateFormat
 import java.util.*
 
-class NewNoteActivity : AppCompatActivity() {
+class NewNoteActivity : BaseActivity() {
     private lateinit var binding: ActivityNewNoteBinding
-    private lateinit var dbHelper: NoteDatabaseHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityNewNoteBinding.inflate(layoutInflater)
         setContentView(binding.root)
         super.onCreate(savedInstanceState)
-        dbHelper = NoteDatabaseHelper(this, "locnote.db", 1)
     }
 
     override fun onDestroy() {
@@ -38,6 +34,7 @@ class NewNoteActivity : AppCompatActivity() {
             writer.use {
                 it.write(content)
             }
+
             db.insert("Note", null, noteValues(title, content))
         } catch (e: IOException) {
             e.printStackTrace()

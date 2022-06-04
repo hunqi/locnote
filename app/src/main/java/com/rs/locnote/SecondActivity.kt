@@ -12,18 +12,15 @@ import java.lang.StringBuilder
 import java.text.SimpleDateFormat
 import java.util.*
 
-class SecondActivity : AppCompatActivity() {
+class SecondActivity : BaseActivity() {
 
     private lateinit var binding: SecondLayoutBinding
     private var title: String? = "title"
-    private lateinit var dbHelper: NoteDatabaseHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         binding = SecondLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        super.onCreate(savedInstanceState)
-
-        dbHelper = NoteDatabaseHelper(this, "Note.db", 1)
 
         title = intent.getStringExtra("title")
         binding.title.text = title;

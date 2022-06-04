@@ -1,15 +1,20 @@
 package com.rs.locnote
 
 import android.content.Intent
-import android.content.Intent.ACTION_VIEW
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.rs.locnote.dao.NoteDatabaseHelper
 
 class NoteAdapter(private val notes: List<Note>): RecyclerView.Adapter<NoteAdapter.ViewHolder>() {
+
+    lateinit var dbHelper: NoteDatabaseHelper
+
     inner class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
         val title: TextView = view.findViewById(R.id.noteTitle)
         val noteFirstLine: TextView = view.findViewById(R.id.noteFirstLine)
@@ -21,12 +26,36 @@ class NoteAdapter(private val notes: List<Note>): RecyclerView.Adapter<NoteAdapt
         val viewHolder = ViewHolder(view)
         val intent = Intent(parent.context, SecondActivity::class.java)
 
+        dbHelper = NoteDatabaseHelper(parent.context, "locnote.db", 1)
+        dbHelper.writableDatabase
+
         viewHolder.itemView.setOnClickListener {
             val position = viewHolder.absoluteAdapterPosition
             val note = notes[position]
             intent.putExtra("title", note.title)
             startActivity(parent.context, intent, null)
         }
+        viewHolder.itemView.setOnLongClickListener{
+            val position = viewHolder.absoluteAdapterPosition
+            val note = notes[position]
+
+            AlertDialog.Builder(parent.context).apply {
+                setTitle("删除")
+                setMessage(String.format("删除%s?", note.title))
+                setCancelable(false)
+                setPositiveButton("OK") { _, _ ->
+                    val db = dbHelper.writableDatabase
+                    db.delete("Note", "title = ?", arrayOf(note.title))
+                    parent.context.deleteFile(note.title)
+                    Toast.makeText(parent.context, String.format("%s已删除", note.title), Toast.LENGTH_SHORT).show()
+                }
+                setNegativeButton("Cancel") { _, _ ->}
+                show()
+            }
+
+            true
+        }
+
         return viewHolder
     }
 
@@ -38,4 +67,5 @@ class NoteAdapter(private val notes: List<Note>): RecyclerView.Adapter<NoteAdapt
     }
 
     override fun getItemCount() = notes.size
+
 }
