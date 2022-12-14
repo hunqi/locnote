@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.database.Cursor
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -22,12 +23,12 @@ class FirstActivity : BaseActivity() {
         binding = FirstLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initNotes()
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
 
+        initNotes()
         adapter = NoteAdapter(notes)
-        adapter.notifyDataSetChanged()
+
         binding.recyclerView.adapter = adapter
 
         binding.newNote.setOnClickListener {
@@ -37,20 +38,30 @@ class FirstActivity : BaseActivity() {
     }
 
     private fun initNotes() {
+        notes.clear()
         val db = dbHelper.readableDatabase
         val cursor = db.query("Note", null, null, null, null, null, null)
 
         if (cursor.moveToFirst()) {
             do {
                 createNote(cursor)?.let { notes.add(it) }
-            }while (cursor.moveToNext())
+            } while (cursor.moveToNext())
         }
-        cursor.close()
+        Log.i(javaClass.simpleName, "initNotes: notes.size = ${notes.size}")
+        cursor?.close()
+        db?.close()
     }
 
     override fun onRestart() {
         super.onRestart()
-        notes.clear()
+        Log.i(this.javaClass.simpleName, "---onRestart---")
+        initNotes()
+        adapter.notifyDataSetChanged()
+    }
+
+    override fun onResume() {
+        Log.i(javaClass.simpleName, "onResume()")
+        super.onResume()
         initNotes()
         adapter.notifyDataSetChanged()
     }
@@ -69,9 +80,10 @@ class FirstActivity : BaseActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
+        when (item.itemId) {
             R.id.add_item -> Toast.makeText(this, "You clicked Add", Toast.LENGTH_SHORT).show()
-            R.id.remove_item -> Toast.makeText(this, "You clicked Remove", Toast.LENGTH_SHORT).show()
+            R.id.remove_item -> Toast.makeText(this, "You clicked Remove", Toast.LENGTH_SHORT)
+                .show()
         }
         return true
     }

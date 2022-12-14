@@ -1,6 +1,7 @@
 package com.rs.locnote
 
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +14,7 @@ import com.rs.locnote.dao.NoteDatabaseHelper
 
 class NoteAdapter(private val notes: List<Note>): RecyclerView.Adapter<NoteAdapter.ViewHolder>() {
 
-    lateinit var dbHelper: NoteDatabaseHelper
+    private lateinit var dbHelper: NoteDatabaseHelper
 
     inner class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
         val title: TextView = view.findViewById(R.id.noteTitle)
@@ -22,12 +23,12 @@ class NoteAdapter(private val notes: List<Note>): RecyclerView.Adapter<NoteAdapt
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        Log.i(this.javaClass.simpleName, "onCreateViewHolder(...)")
         val view = LayoutInflater.from(parent.context).inflate(R.layout.note_item, parent, false)
         val viewHolder = ViewHolder(view)
         val intent = Intent(parent.context, SecondActivity::class.java)
 
         dbHelper = NoteDatabaseHelper(parent.context, "locnote.db", 1)
-        dbHelper.writableDatabase
 
         viewHolder.itemView.setOnClickListener {
             val position = viewHolder.absoluteAdapterPosition
@@ -48,6 +49,7 @@ class NoteAdapter(private val notes: List<Note>): RecyclerView.Adapter<NoteAdapt
                     db.delete("Note", "title = ?", arrayOf(note.title))
                     parent.context.deleteFile(note.title)
                     Toast.makeText(parent.context, String.format("%s已删除", note.title), Toast.LENGTH_SHORT).show()
+                    notifyItemRemoved(position)
                 }
                 setNegativeButton("Cancel") { _, _ ->}
                 show()

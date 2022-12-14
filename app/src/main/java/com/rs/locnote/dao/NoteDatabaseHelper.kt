@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.widget.Toast
 
-class NoteDatabaseHelper(val context: Context, name:String, version:Int):
+class NoteDatabaseHelper(private val context: Context, name:String, version:Int):
     SQLiteOpenHelper(context, name, null, version) {
 
     private val createNote = "create table Note(" +

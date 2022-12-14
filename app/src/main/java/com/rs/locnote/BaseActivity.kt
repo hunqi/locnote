@@ -11,7 +11,6 @@ open class BaseActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         dbHelper = NoteDatabaseHelper(this, "locnote.db", 1)
-        dbHelper.writableDatabase
     }
 
 }

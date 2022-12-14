@@ -3,6 +3,7 @@ package com.rs.locnote
 import android.content.ContentValues
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import com.rs.locnote.databinding.ActivityNewNoteBinding
 import java.io.BufferedWriter
 import java.io.IOException
@@ -19,14 +20,16 @@ class NewNoteActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onPause() {
+        super.onPause()
         val title = binding.title.text.toString()
         val content = binding.content.text.toString()
         save(title, content)
     }
 
     private fun save(title: String, content: String) {
+        Log.i(javaClass.simpleName, "save: title=$title")
+
         val db = dbHelper.writableDatabase
         try {
             val output = openFileOutput(title, Context.MODE_PRIVATE)
@@ -34,10 +37,12 @@ class NewNoteActivity : BaseActivity() {
             writer.use {
                 it.write(content)
             }
-
             db.insert("Note", null, noteValues(title, content))
         } catch (e: IOException) {
             e.printStackTrace()
+        } finally {
+            db?.close()
+            Log.i(javaClass.simpleName, "save() done")
         }
     }
 
