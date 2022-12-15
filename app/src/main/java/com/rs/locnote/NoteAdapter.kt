@@ -12,7 +12,7 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.rs.locnote.dao.NoteDatabaseHelper
 
-class NoteAdapter(private val notes: List<Note>): RecyclerView.Adapter<NoteAdapter.ViewHolder>() {
+class NoteAdapter(private val notes: MutableList<Note>): RecyclerView.Adapter<NoteAdapter.ViewHolder>() {
 
     private lateinit var dbHelper: NoteDatabaseHelper
 
@@ -49,6 +49,7 @@ class NoteAdapter(private val notes: List<Note>): RecyclerView.Adapter<NoteAdapt
                     db.delete("Note", "title = ?", arrayOf(note.title))
                     parent.context.deleteFile(note.title)
                     Toast.makeText(parent.context, String.format("%s已删除", note.title), Toast.LENGTH_SHORT).show()
+                    notes.removeAt(position)
                     notifyItemRemoved(position)
                 }
                 setNegativeButton("Cancel") { _, _ ->}
