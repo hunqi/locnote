@@ -52,30 +52,6 @@ class FirstActivity : BaseActivity() {
         db?.close()
     }
 
-    // todo start test
-
-    override fun onStart() {
-        super.onStart()
-        Log.i(javaClass.simpleName, "onStart")
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        Log.i(javaClass.simpleName, "onRestoreInstanceState")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.i(javaClass.simpleName, "onStop")
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.i(javaClass.simpleName, "onResume")
-    }
-
-    // todo end
-
     override fun onRestart() {
         super.onRestart()
         Log.i(this.javaClass.simpleName, "---onRestart---")
