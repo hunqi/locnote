@@ -26,13 +26,13 @@ class NoteAdapter(private val notes: MutableList<Note>): RecyclerView.Adapter<No
         Log.i(this.javaClass.simpleName, "onCreateViewHolder(...)")
         val view = LayoutInflater.from(parent.context).inflate(R.layout.note_item, parent, false)
         val viewHolder = ViewHolder(view)
-        val intent = Intent(parent.context, SecondActivity::class.java)
 
         dbHelper = NoteDatabaseHelper(parent.context, "locnote.db", 1)
 
         viewHolder.itemView.setOnClickListener {
             val position = viewHolder.absoluteAdapterPosition
             val note = notes[position]
+            val intent = Intent(parent.context, SecondActivity::class.java)
             intent.putExtra("title", note.title)
             startActivity(parent.context, intent, null)
         }

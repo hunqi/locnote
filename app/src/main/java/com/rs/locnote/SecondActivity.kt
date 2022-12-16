@@ -16,6 +16,7 @@ class SecondActivity : BaseActivity() {
 
     private lateinit var binding: SecondLayoutBinding
     private var title: String? = "title"
+    private var originContent: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,17 +26,19 @@ class SecondActivity : BaseActivity() {
         title = intent.getStringExtra("title")
         binding.title.text = title;
 
-        val content = load(title)
-        if (content.isNotEmpty()) {
-            binding.content.setText(content)
-            binding.content.setSelection(content.length)
+        originContent = load(title)
+        originContent?.let {
+            binding.content.setText(it)
+            binding.content.setSelection(it.length)
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
         val inputText = binding.content.text.toString()
-        save(inputText)
+        if (inputText != originContent) {
+            save(inputText)
+        }
     }
 
     private fun load(title: String?): String {
