@@ -40,7 +40,7 @@ class FirstActivity : BaseActivity() {
     private fun initNotes() {
         notes.clear()
         val db = dbHelper.readableDatabase
-        val cursor = db.query("Note", null, null, null, null, null, null)
+        val cursor = db.query("Note", null, null, null, null, null, "update_time desc")
 
         if (cursor.moveToFirst()) {
             do {

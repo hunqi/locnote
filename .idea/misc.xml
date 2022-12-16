@@ -3,9 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Ray/AndroidStudioProjects/locnote/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.171" />
+        <entry key="..\:/Users/Ray/AndroidStudioProjects/locnote/app/src/main/res/drawable/ic_launcher_background.xml" value="0.171" />
+        <entry key="..\:/Users/Ray/AndroidStudioProjects/locnote/app/src/main/res/drawable/round_corners.xml" value="0.171" />
         <entry key="..\:/Users/Ray/AndroidStudioProjects/locnote/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/Users/Ray/AndroidStudioProjects/locnote/app/src/main/res/layout/activity_new_note.xml" value="0.2" />
-        <entry key="..\:/Users/Ray/AndroidStudioProjects/locnote/app/src/main/res/layout/first_layout.xml" value="0.18" />
+        <entry key="..\:/Users/Ray/AndroidStudioProjects/locnote/app/src/main/res/layout/first_layout.xml" value="0.25" />
         <entry key="..\:/Users/Ray/AndroidStudioProjects/locnote/app/src/main/res/layout/news_title_frag.xml" value="0.17864583333333334" />
         <entry key="..\:/Users/Ray/AndroidStudioProjects/locnote/app/src/main/res/layout/note_item.xml" value="0.33" />
         <entry key="..\:/Users/Ray/AndroidStudioProjects/locnote/app/src/main/res/layout/second_layout.xml" value="0.2" />
