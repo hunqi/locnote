@@ -33,8 +33,8 @@ class SecondActivity : BaseActivity() {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onPause() {
+        super.onPause()
         val inputText = binding.content.text.toString()
         if (inputText != originContent) {
             save(inputText)
