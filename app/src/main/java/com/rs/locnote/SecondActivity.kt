@@ -5,6 +5,7 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.rs.locnote.audio.SpeechUtils
 import com.rs.locnote.dao.NoteDatabaseHelper
 import com.rs.locnote.databinding.SecondLayoutBinding
 import java.io.*
@@ -15,6 +16,7 @@ import java.util.*
 class SecondActivity : BaseActivity() {
 
     private lateinit var binding: SecondLayoutBinding
+    private lateinit var speechUtils: SpeechUtils
     private var title: String? = "title"
     private var originContent: String? = null
 
@@ -22,6 +24,7 @@ class SecondActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = SecondLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        speechUtils = SpeechUtils(this)
 
         title = intent.getStringExtra("title")
         binding.title.text = title;
@@ -31,6 +34,13 @@ class SecondActivity : BaseActivity() {
             binding.content.setText(it)
             binding.content.setSelection(it.length)
         }
+
+        binding.btnReadBook.setOnClickListener {
+            val content = binding.content.text.toString()
+            content?.let {
+                speechUtils.startSpeak(it)
+            }
+        }
     }
 
     override fun onPause() {
@@ -39,6 +49,11 @@ class SecondActivity : BaseActivity() {
         if (inputText != originContent) {
             save(inputText)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        speechUtils.stopSpeak()
     }
 
     private fun load(title: String?): String {
