@@ -22,9 +22,21 @@ class NewNoteActivity : BaseActivity() {
 
     override fun onPause() {
         super.onPause()
-        val title = binding.title.text.toString()
         val content = binding.content.text.toString()
+        val title = getTitle(content)
         save(title, content)
+    }
+
+    private fun getTitle(content: String): String {
+        var title = binding.title.text.toString()
+        if (title.isBlank() && content.isNotBlank()) {
+            title = if (content.length > 10) {
+                content.substring(0, 10)
+            } else {
+                content
+            }
+        }
+        return title
     }
 
     private fun save(title: String, content: String) {

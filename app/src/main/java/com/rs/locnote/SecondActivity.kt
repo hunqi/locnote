@@ -2,14 +2,10 @@ package com.rs.locnote
 
 import android.content.ContentValues
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import com.rs.locnote.audio.SpeechUtils
-import com.rs.locnote.dao.NoteDatabaseHelper
 import com.rs.locnote.databinding.SecondLayoutBinding
 import java.io.*
-import java.lang.StringBuilder
 import java.text.SimpleDateFormat
 import java.util.*
 
